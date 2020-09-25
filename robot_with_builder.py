@@ -4,32 +4,14 @@ from abc import ABC, abstractmethod  # For Builder classes
 class Robot:
   # Uses a lot of flag logic here:  Is that necessary?
   # Does the use of this flag logic create other problems?
-  def __init__(self):
-    self.bipedal = False
-    self.quadripedal = False
-    self.wheeled = False
-    self.flying = False
-    self.traversal = []
-    self.detection_systems = []
-
-
-
-    def setBipedal(self, bipedal):
-      self.bipedal=bipedal
-
-    def setQuadripedal(self, quadripedal):
-      self.quadripedal=quadripedal
-
-    def setWheeled(self, wheeled):
-      self.wheeled=wheeled
-
-    def setFlying(self, flying):
-      self.flying=flying
-
-    def setTraversal(self, traversal):
-      self.traversal=traversal
-
-    #def setDetectionSystems(self, ):
+  def __init__(self, bipedal = None, quadripedal = None, wheeled = None,
+             flying = None, traversal = [], detection_systems = []):
+    self.bipedal = bipedal
+    self.quadripedal = quadripedal
+    self.wheeled = wheeled
+    self.flying = flying
+    self.traversal = traversal
+    self.detection_systems = detection_systems
     
 
 
@@ -68,11 +50,13 @@ class Robot:
 # In a real application, there would be an endless list of these, each one
 #   composing additional subcomponents
 class BipedalLegs:
-  pedals=None
+ #def __str__(self):
     #return "two legs"
 
+  bipedal=None
+
 class QuadripedalLegs:
-  pedals=None
+  quadripedal=None
     #return "four legs"
 
 class Arms:
@@ -110,11 +94,11 @@ class InfraredDetectionSystem:
 # We're using inheritence, but it's shallow
 class RobotBuilder(ABC):
 
-  def getBipedalLegs(self):
+  def getBipedal(self):
     pass
   
 
-  def getQuadripedalLegs(self):
+  def getQuadripedal(self):
    pass
 
   def getArms(self):
@@ -221,6 +205,7 @@ class AndroidBuilder(RobotBuilder):
 
 
   def build_traversal(self):
+
     self.product.bipedal = True
     self.product.traversal.append(BipedalLegs())
     self.product.traversal.append(Arms())
