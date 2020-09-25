@@ -149,19 +149,26 @@ class AutonomousCarBuilder(RobotBuilder):
 # Remove # in line above to comment out this section when using Director
 
 # Using the builders to create different robots
-builder = AndroidBuilder()
-builder.build_traversal()
-builder.build_detection_system()
-print(builder.get_product())
 
-builder = AutonomousCarBuilder()
-builder.build_traversal()
-builder.build_detection_system()
-print(builder.get_product())
+"""def main():
+  builder = AndroidBuilder()
+  builder.build_traversal()
+  builder.build_detection_system()
+  print(builder.get_product())
+
+  builder = AutonomousCarBuilder()
+  builder.build_traversal()
+  builder.build_detection_system()
+  print(builder.get_product())
+
+
+if __name__ == '__main__':
+  main()"""
+
 
 #-------------------------------------------------------
 #  Keep line below whether testing builders or director
-'''
+
 #-------------------------------------------------------
 
 # Diretor manages all of the Builders
@@ -177,14 +184,21 @@ class Director:
         builder.build_detection_system()
         return builder.get_product()
 
-director = Director()
 
-builder = AndroidBuilder()
-print(director.make_android(builder))
+def main():
+  director = Director()
 
-builder = AutonomousCarBuilder()
-print(director.make_autonomous_car(builder))
+  builder = AndroidBuilder()
+  print(director.make_android(builder))
+
+  builder = AutonomousCarBuilder()
+  print(director.make_autonomous_car(builder))
+
+
+if __name__ == '__main__':
+  main()
+
 
 # comment out line below when testing director
-'''
+
 
