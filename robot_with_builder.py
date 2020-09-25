@@ -12,6 +12,27 @@ class Robot:
     self.traversal = []
     self.detection_systems = []
 
+
+
+    def setBipedal(self, bipedal):
+      self.bipedal=bipedal
+
+    def setQuadripedal(self, quadripedal):
+      self.quadripedal=quadripedal
+
+    def setWheeled(self, wheeled):
+      self.wheeled=wheeled
+
+    def setFlying(self, flying):
+      self.flying=flying
+
+    def setTraversal(self, traversal):
+      self.traversal=traversal
+
+    #def setDetectionSystems(self, ):
+    
+
+
   # Huge decision statement: why is this not good?
   # Can we improve this?
   def __str__(self):
@@ -47,40 +68,39 @@ class Robot:
 # In a real application, there would be an endless list of these, each one
 #   composing additional subcomponents
 class BipedalLegs:
-  def __str__(self):
-    return "two legs"
+  pedals=None
+    #return "two legs"
 
 class QuadripedalLegs:
-  def __str__(self):
-    return "four legs"
+  pedals=None
+    #return "four legs"
 
 class Arms:
-  def __str__(self):
-    return "two arms"
+  arms=None
+    #return "two arms"
 
 class Wings:
-  def __str__(self):
-    return "wings"
+  wings=None
+    #return "wings"
 
 class Blades:
-  def __str__(self):
-    return "blades"
+  blades=None
+    #return "blades"
 
 class FourWheels:
-  def __str__(self):
-    return "four wheels"
+  wheels=None
+    #return "four wheels"
 
 class TwoWheels:
-  def __str__(self):
-    return "two wheels"
+  wheels=None
+    #return "two wheels"
 
 class CameraDetectionSystem:
-  def __str__(self):
-    return "cameras"
+  detect=None
 
 class InfraredDetectionSystem:
-  def __str__(self):
-    return "infrared"
+  detect=None
+    
 
 #----------------------------------------------------------------------------
 # Note that this code was place at the top of this program for visibility
@@ -89,6 +109,37 @@ class InfraredDetectionSystem:
 # The abstract superclass for all the builders
 # We're using inheritence, but it's shallow
 class RobotBuilder(ABC):
+
+  def getBipedalLegs(self):
+    pass
+  
+
+  def getQuadripedalLegs(self):
+   pass
+
+  def getArms(self):
+    pass
+
+  def getWings(self):
+    pass
+
+
+  def getBlades(self):
+    pass
+  def getFourWheels(self):
+    pass
+  def getTwoWheels(self):
+    pass
+  
+  def getCameraDetectionSystem(self):
+    pass
+  
+
+  
+  def getTraversel(self):
+    pass
+  def getDetectionSystems(self):
+    pass
     
   @abstractmethod
   def reset(self):
@@ -115,6 +166,59 @@ class AndroidBuilder(RobotBuilder):
   # Should it be elevated to the superclass?  
   def get_product(self):
     return self.product
+
+  def getBipedal(self):
+    bipedal= BipedalLegs()
+    self.bipedal="two legs"
+    return bipedal
+
+
+
+
+  def getQuadripedal(self):
+    quadripedal= QuadripedalLegs()
+    self.quadripedal="four legs"
+    return quadripedal
+
+
+  def getArms(self):
+    arms=Arms()
+    self.arms="two arms"
+    return arms
+
+
+  def getWings(self):
+    wings=Wings()
+    self.wings="wings"
+    return wings
+
+  def getBlades(self):
+    blades=Blades()
+    self.blades="blades"
+    return blades
+
+  def getFourWheels(self):
+    wheels=FourWheels()
+    self.wheels="four wheels"
+    return wheels
+
+  def getTwoWheels(self):
+    wheels=TwoWheels()
+    self.wheels="two wheels"
+    return wheels
+
+
+  def getCameraDetectionSystem(self):
+    detect=CameraDetectionSystem()
+    self.detect="camera"
+    return detect
+
+
+  def getInfraredDetectionSystem(self):
+    detect=InfraredDetectionSystem()
+    self.detect="infrared"
+    return detect
+
 
   def build_traversal(self):
     self.product.bipedal = True
@@ -149,19 +253,26 @@ class AutonomousCarBuilder(RobotBuilder):
 # Remove # in line above to comment out this section when using Director
 
 # Using the builders to create different robots
-builder = AndroidBuilder()
-builder.build_traversal()
-builder.build_detection_system()
-print(builder.get_product())
 
-builder = AutonomousCarBuilder()
-builder.build_traversal()
-builder.build_detection_system()
-print(builder.get_product())
+"""def main():
+  builder = AndroidBuilder()
+  builder.build_traversal()
+  builder.build_detection_system()
+  print(builder.get_product())
+
+  builder = AutonomousCarBuilder()
+  builder.build_traversal()
+  builder.build_detection_system()
+  print(builder.get_product())
+
+
+if __name__ == '__main__':
+  main()"""
+
 
 #-------------------------------------------------------
 #  Keep line below whether testing builders or director
-'''
+
 #-------------------------------------------------------
 
 # Diretor manages all of the Builders
@@ -177,14 +288,21 @@ class Director:
         builder.build_detection_system()
         return builder.get_product()
 
-director = Director()
 
-builder = AndroidBuilder()
-print(director.make_android(builder))
+def main():
+  director = Director()
 
-builder = AutonomousCarBuilder()
-print(director.make_autonomous_car(builder))
+  builder = AndroidBuilder()
+  print(director.make_android(builder))
+
+  builder = AutonomousCarBuilder()
+  print(director.make_autonomous_car(builder))
+
+
+if __name__ == '__main__':
+  main()
+
 
 # comment out line below when testing director
-'''
+
 
