@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod  # For Builder classes
 class Robot:
   # Uses a lot of flag logic here:  Is that necessary?
   # Does the use of this flag logic create other problems?
+<<<<<<< HEAD
   def __init__(self, bipedal = None, quadripedal = None, wheeled = None,
              flying = None, traversal = [], detection_systems = []):
     self.bipedal = bipedal
@@ -14,6 +15,15 @@ class Robot:
     self.detection_systems = detection_systems
     
 
+=======
+  def __init__(self):
+    self.bipedal = False
+    self.quadripedal = False
+    self.wheeled = False
+    self.flying = False
+    self.traversal = []
+    self.detection_systems = []
+>>>>>>> d463029c3e50355b89a1ce31e456278f76195580
 
   # Huge decision statement: why is this not good?
   # Can we improve this?
@@ -50,6 +60,7 @@ class Robot:
 # In a real application, there would be an endless list of these, each one
 #   composing additional subcomponents
 class BipedalLegs:
+<<<<<<< HEAD
  #def __str__(self):
     #return "two legs"
 
@@ -85,6 +96,42 @@ class CameraDetectionSystem:
 class InfraredDetectionSystem:
   detect=None
     
+=======
+  def __str__(self):
+    return "two legs"
+
+class QuadripedalLegs:
+  def __str__(self):
+    return "four legs"
+
+class Arms:
+  def __str__(self):
+    return "two arms"
+
+class Wings:
+  def __str__(self):
+    return "wings"
+
+class Blades:
+  def __str__(self):
+    return "blades"
+
+class FourWheels:
+  def __str__(self):
+    return "four wheels"
+
+class TwoWheels:
+  def __str__(self):
+    return "two wheels"
+
+class CameraDetectionSystem:
+  def __str__(self):
+    return "cameras"
+
+class InfraredDetectionSystem:
+  def __str__(self):
+    return "infrared"
+>>>>>>> d463029c3e50355b89a1ce31e456278f76195580
 
 #----------------------------------------------------------------------------
 # Note that this code was place at the top of this program for visibility
@@ -93,6 +140,7 @@ class InfraredDetectionSystem:
 # The abstract superclass for all the builders
 # We're using inheritence, but it's shallow
 class RobotBuilder(ABC):
+<<<<<<< HEAD
 
   def getBipedal(self):
     pass
@@ -124,6 +172,8 @@ class RobotBuilder(ABC):
     pass
   def getDetectionSystems(self):
     pass
+=======
+>>>>>>> d463029c3e50355b89a1ce31e456278f76195580
     
   @abstractmethod
   def reset(self):
@@ -151,6 +201,7 @@ class AndroidBuilder(RobotBuilder):
   def get_product(self):
     return self.product
 
+<<<<<<< HEAD
   def getBipedal(self):
     bipedal= BipedalLegs()
     self.bipedal="two legs"
@@ -206,6 +257,9 @@ class AndroidBuilder(RobotBuilder):
 
   def build_traversal(self):
 
+=======
+  def build_traversal(self):
+>>>>>>> d463029c3e50355b89a1ce31e456278f76195580
     self.product.bipedal = True
     self.product.traversal.append(BipedalLegs())
     self.product.traversal.append(Arms())
