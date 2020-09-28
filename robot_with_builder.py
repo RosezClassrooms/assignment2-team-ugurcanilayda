@@ -4,18 +4,6 @@ from abc import ABC, abstractmethod  # For Builder classes
 class Robot:
   # Uses a lot of flag logic here:  Is that necessary?
   # Does the use of this flag logic create other problems?
-<<<<<<< HEAD
-  def __init__(self, bipedal = None, quadripedal = None, wheeled = None,
-             flying = None, traversal = [], detection_systems = []):
-    self.bipedal = bipedal
-    self.quadripedal = quadripedal
-    self.wheeled = wheeled
-    self.flying = flying
-    self.traversal = traversal
-    self.detection_systems = detection_systems
-    
-
-=======
   def __init__(self):
     self.bipedal = False
     self.quadripedal = False
@@ -23,11 +11,11 @@ class Robot:
     self.flying = False
     self.traversal = []
     self.detection_systems = []
->>>>>>> d463029c3e50355b89a1ce31e456278f76195580
 
   # Huge decision statement: why is this not good?
   # Can we improve this?
   def __str__(self):
+
     string = ""
     if self.bipedal:
       string += "BIPEDAL "
@@ -38,7 +26,7 @@ class Robot:
     if self.wheeled:
       string += "ROBOT ON WHEELS\n"
     else:
-      string += "ROBOT\n"
+      string += "ROBOT\n" 
 
     if self.traversal:
       string += "Traversal modules installed:\n"
@@ -52,51 +40,14 @@ class Robot:
     for system in self.detection_systems:
       string += "- " + str(system) + "\n"
 
-    return string
-
+    #return string
+    return ''.join(string)
 #---------------------------------------------------------------------------
 
 # Concrete classes for componenets
 # In a real application, there would be an endless list of these, each one
 #   composing additional subcomponents
 class BipedalLegs:
-<<<<<<< HEAD
- #def __str__(self):
-    #return "two legs"
-
-  bipedal=None
-
-class QuadripedalLegs:
-  quadripedal=None
-    #return "four legs"
-
-class Arms:
-  arms=None
-    #return "two arms"
-
-class Wings:
-  wings=None
-    #return "wings"
-
-class Blades:
-  blades=None
-    #return "blades"
-
-class FourWheels:
-  wheels=None
-    #return "four wheels"
-
-class TwoWheels:
-  wheels=None
-    #return "two wheels"
-
-class CameraDetectionSystem:
-  detect=None
-
-class InfraredDetectionSystem:
-  detect=None
-    
-=======
   def __str__(self):
     return "two legs"
 
@@ -131,7 +82,6 @@ class CameraDetectionSystem:
 class InfraredDetectionSystem:
   def __str__(self):
     return "infrared"
->>>>>>> d463029c3e50355b89a1ce31e456278f76195580
 
 #----------------------------------------------------------------------------
 # Note that this code was place at the top of this program for visibility
@@ -140,40 +90,6 @@ class InfraredDetectionSystem:
 # The abstract superclass for all the builders
 # We're using inheritence, but it's shallow
 class RobotBuilder(ABC):
-<<<<<<< HEAD
-
-  def getBipedal(self):
-    pass
-  
-
-  def getQuadripedal(self):
-   pass
-
-  def getArms(self):
-    pass
-
-  def getWings(self):
-    pass
-
-
-  def getBlades(self):
-    pass
-  def getFourWheels(self):
-    pass
-  def getTwoWheels(self):
-    pass
-  
-  def getCameraDetectionSystem(self):
-    pass
-  
-
-  
-  def getTraversel(self):
-    pass
-  def getDetectionSystems(self):
-    pass
-=======
->>>>>>> d463029c3e50355b89a1ce31e456278f76195580
     
   @abstractmethod
   def reset(self):
@@ -201,65 +117,7 @@ class AndroidBuilder(RobotBuilder):
   def get_product(self):
     return self.product
 
-<<<<<<< HEAD
-  def getBipedal(self):
-    bipedal= BipedalLegs()
-    self.bipedal="two legs"
-    return bipedal
-
-
-
-
-  def getQuadripedal(self):
-    quadripedal= QuadripedalLegs()
-    self.quadripedal="four legs"
-    return quadripedal
-
-
-  def getArms(self):
-    arms=Arms()
-    self.arms="two arms"
-    return arms
-
-
-  def getWings(self):
-    wings=Wings()
-    self.wings="wings"
-    return wings
-
-  def getBlades(self):
-    blades=Blades()
-    self.blades="blades"
-    return blades
-
-  def getFourWheels(self):
-    wheels=FourWheels()
-    self.wheels="four wheels"
-    return wheels
-
-  def getTwoWheels(self):
-    wheels=TwoWheels()
-    self.wheels="two wheels"
-    return wheels
-
-
-  def getCameraDetectionSystem(self):
-    detect=CameraDetectionSystem()
-    self.detect="camera"
-    return detect
-
-
-  def getInfraredDetectionSystem(self):
-    detect=InfraredDetectionSystem()
-    self.detect="infrared"
-    return detect
-
-
   def build_traversal(self):
-
-=======
-  def build_traversal(self):
->>>>>>> d463029c3e50355b89a1ce31e456278f76195580
     self.product.bipedal = True
     self.product.traversal.append(BipedalLegs())
     self.product.traversal.append(Arms())
@@ -292,26 +150,19 @@ class AutonomousCarBuilder(RobotBuilder):
 # Remove # in line above to comment out this section when using Director
 
 # Using the builders to create different robots
+builder = AndroidBuilder()
+builder.build_traversal()
+builder.build_detection_system()
+print(builder.get_product())
 
-"""def main():
-  builder = AndroidBuilder()
-  builder.build_traversal()
-  builder.build_detection_system()
-  print(builder.get_product())
-
-  builder = AutonomousCarBuilder()
-  builder.build_traversal()
-  builder.build_detection_system()
-  print(builder.get_product())
-
-
-if __name__ == '__main__':
-  main()"""
-
+builder = AutonomousCarBuilder()
+builder.build_traversal()
+builder.build_detection_system()
+print(builder.get_product())
 
 #-------------------------------------------------------
 #  Keep line below whether testing builders or director
-
+'''
 #-------------------------------------------------------
 
 # Diretor manages all of the Builders
@@ -327,21 +178,14 @@ class Director:
         builder.build_detection_system()
         return builder.get_product()
 
+director = Director()
 
-def main():
-  director = Director()
+builder = AndroidBuilder()
+print(director.make_android(builder))
 
-  builder = AndroidBuilder()
-  print(director.make_android(builder))
-
-  builder = AutonomousCarBuilder()
-  print(director.make_autonomous_car(builder))
-
-
-if __name__ == '__main__':
-  main()
-
+builder = AutonomousCarBuilder()
+print(director.make_autonomous_car(builder))
 
 # comment out line below when testing director
-
+'''
 
