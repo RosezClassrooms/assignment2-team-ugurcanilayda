@@ -14,73 +14,42 @@ class Robot:
 
   # Huge decision statement: why is this not good?
   # Can we improve this?
-  def __str__(self):
-    string = ""
-    if self.bipedal:
-      string += "BIPEDAL "
-    if self.quadripedal:
-      string += "QUADRIPEDAL "
-    if self.flying:
-      string += "FLYING ROBOT "
-    if self.wheeled:
-      string += "ROBOT ON WHEELS\n"
-    else:
-      string += "ROBOT\n"
+	def __str__(self):
 
-    if self.traversal:
-      string += "Traversal modules installed:\n"
+		if self.traversal:
+			self.name += "\nTraversal modules installed:\n"
+		for module in self.traversal:
+			self.name += "- " + str(module) + "\n"
+		if self.detection_systems:
+			self.name += "Detection systems installed:\n"
+		for system in self.detection_systems:
+			self.name += "- " + str(system) + "\n"
+		return self.name
 
-    for module in self.traversal:
-      string += "- " + str(module) + "\n"
-
-    if self.detection_systems:
-      string += "Detection systems installed:\n"
-
-    for system in self.detection_systems:
-      string += "- " + str(system) + "\n"
-
-    return string
-
+#'{self.bipedal} BIPEDAL'.format(self=self)
 #---------------------------------------------------------------------------
 
 # Concrete classes for componenets
 # In a real application, there would be an endless list of these, each one
 #   composing additional subcomponents
 class BipedalLegs:
-  def __str__(self):
-    return "two legs"
-
+    BipedalLegs = None
 class QuadripedalLegs:
-  def __str__(self):
-    return "four legs"
-
+    QuadripedalLegs = None
 class Arms:
-  def __str__(self):
-    return "two arms"
-
+    Arms = None
 class Wings:
-  def __str__(self):
-    return "wings"
-
+    Wings = None
 class Blades:
-  def __str__(self):
-    return "blades"
-
+    Blades = None
 class FourWheels:
-  def __str__(self):
-    return "four wheels"
-
+    FourWheels = None
 class TwoWheels:
-  def __str__(self):
-    return "two wheels"
-
+    TwoWheels = None
 class CameraDetectionSystem:
-  def __str__(self):
-    return "cameras"
-
+    CameraDetectionSystem = None
 class InfraredDetectionSystem:
-  def __str__(self):
-    return "infrared"
+    InfraredDetectionSystem =None
 
 #----------------------------------------------------------------------------
 # Note that this code was place at the top of this program for visibility
@@ -89,20 +58,49 @@ class InfraredDetectionSystem:
 # The abstract superclass for all the builders
 # We're using inheritence, but it's shallow
 class RobotBuilder(ABC):
-    
+
   @abstractmethod
   def reset(self):
     pass
-
   @abstractmethod
   def build_traversal(self):
     pass
-
   @abstractmethod
   def build_detection_system(self):
     pass
+  @abstractmethod
+  def getBipedalLegs(self):
+    BipedalLegs = BipedalLegs()
+    BipedalLegs = "two legs"
+  @abstractmethod
+  def getQuadripedalLegs(self):
+    QuadripedalLegs = QuadripedalLegs()
+    QuadripedalLegs = "four legs"
+  @abstractmethod
+  def getArms(self):
+    Arms = Arms()
+    Arms = "two arms"
+  @abstractmethod
+  def getWings(self):
+    Wings = Wings()
+    Wings = "wings"
+  def getBlades(self):
+    Blades = Blades()
+    Blades = "blades"
+  def getFourWheels(self):
+    FourWheels = FourWheels()
+    FourWheels = "four wheels"
+  def getTwoWheels(self):
+    TwoWheels = TwoWheels()
+    TwoWheels = "two wheels"
+  def getCameraDetectionSystem(self):
+    CameraDetectionSystem = CameraDetectionSystem()
+    CameraDetectionSystem = "cameras"
+  def getInfraredDetectionSystem(self):
+    InfraredDetectionSystem = InfraredDetectionSystem()
+    InfraredDetectionSystem = "infrared"
 
-    
+
 # Concrete Builder class:  there would be MANY of these
 class AndroidBuilder(RobotBuilder):
   def __init__(self):
@@ -112,17 +110,17 @@ class AndroidBuilder(RobotBuilder):
     self.product = Robot()
 
   # All of the concrete builders have this in common
-  # Should it be elevated to the superclass?  
+  # Should it be elevated to the superclass?
   def get_product(self):
     return self.product
 
   def build_traversal(self):
     self.product.bipedal = True
-    self.product.traversal.append(BipedalLegs())
-    self.product.traversal.append(Arms())
+    self.product.traversal.append(getBipedalLegs())
+    self.product.traversal.append(getArms())
 
   def build_detection_system(self):
-    self.product.detection_systems.append(CameraDetectionSystem())
+    self.product.detection_systems.append(getCameraDetectionSystem())
 
 # Concrete Builder class:  there would be many of these
 class AutonomousCarBuilder(RobotBuilder):
@@ -133,19 +131,19 @@ class AutonomousCarBuilder(RobotBuilder):
     self.product = Robot()
 
   # All of the concrete builders have this in common
-  # Should it be elevated to the superclass?  
+  # Should it be elevated to the superclass?
   def get_product(self):
     return self.product
 
   def build_traversal(self):
     self.product.wheeled = True
-    self.product.traversal.append(FourWheels())
+    self.product.traversal.append(getFourWheels())
 
   def build_detection_system(self):
-    self.product.detection_systems.append(InfraredDetectionSystem())
+    self.product.detection_systems.append(getInfraredDetectionSystem())
 
 #-------------------------------------------------------------------------
-#'''
+'''
 # Remove # in line above to comment out this section when using Director
 
 # Using the builders to create different robots
@@ -158,10 +156,10 @@ builder = AutonomousCarBuilder()
 builder.build_traversal()
 builder.build_detection_system()
 print(builder.get_product())
-
+'''
 #-------------------------------------------------------
 #  Keep line below whether testing builders or director
-'''
+
 #-------------------------------------------------------
 
 # Diretor manages all of the Builders
@@ -186,5 +184,3 @@ builder = AutonomousCarBuilder()
 print(director.make_autonomous_car(builder))
 
 # comment out line below when testing director
-'''
-
